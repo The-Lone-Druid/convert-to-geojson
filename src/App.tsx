@@ -105,6 +105,14 @@ function App() {
     return JSON.stringify(geoJsonCode, null, 2);
   }, [geoJsonCode]);
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // Debounce the state update to improve performance
+    const value = e.target.value;
+    requestAnimationFrame(() => {
+      setData(value);
+    });
+  };
+
   return (
     <div className="p-5 max-w-6xl mx-auto">
       <div className="mb-8">
@@ -129,7 +137,7 @@ function App() {
           className="w-full p-5 font-mono text-sm border rounded-md bg-black"
           placeholder="Paste your VoyageRouteData JSON here..."
           value={data}
-          onChange={(e) => setData(e.target.value)}
+          onChange={handleTextChange}
           spellCheck={false}
         ></textarea>
         <button
